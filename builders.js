@@ -1,18 +1,15 @@
 class PageBuilder {
-  static simpleDisplay(){
+  static simpleDisplay($pizzaData){
 
     let $pizzaCards = [];
-    app.pizzaData.forEach((pizza)=>{
+    $pizzaData.forEach((pizza)=>{
       $pizzaCards = $pizzaCards.concat(
         ElementBuilder.card(
           ElementBuilder.pizza(pizza)));
     });
     PageBuilder.populateColumns($pizzaCards);
-    
+    return $pizzaCards;
   }
-  static showHideDisplay(){
-    PageBuilder.simpleDisplay();
-    }
 
   static populateColumns($elems){
     $('#main-container').append(
@@ -24,21 +21,13 @@ class PageBuilder {
 
 class ElementBuilder {
   static iconList(pizza){
-    let $container = $('<div></div>')
-      .addClass('row-fluid')
+    let $container = $('<span></span>')
+      .addClass('row-fluid text-secondary mb-4')
       .select();
     [
       {
-        "code" : "fa fa-eye",
-        "callback": PizzaCard.test
-      },
-      {
-        "code" : "fa fa-eye-slash",
-        "callback": ()=>{window.alert(pizza.name)}
-      },
-      {
-        "code" : "fa fa-arrow-right",
-        "callback": ()=>{window.alert(pizza.name)}
+        "code" : app.icons.eyeOpen,
+        "callback": ClickHandler.toggleCard
       }
     ]
     .forEach((options)=>{
@@ -54,9 +43,10 @@ class ElementBuilder {
 
   static icon(options){
     return $('<i></i>')
-      .addClass(options.code + " mr-2")
+      .addClass(options.code)
+      .attr('style',"font-size:24px;")
       .attr('aria-hidden','true')
-      .click(options.callback);
+      .on("click", options.callback);
   }
 
   static columns($elems, columnCount){
@@ -100,8 +90,13 @@ class ElementBuilder {
     let $pizzaContainer = $('<div></div>')
       .addClass('container-fluid');
     let $heading = $('<h3></h3')
-    .text(pizza.name)
-    let $iconList = ElementBuilder.iconList(pizza);
+    .append(
+      ($('<span></span>')
+        .text(pizza.name + ' ')
+    ))
+    .append(
+      ElementBuilder.iconList(pizza)
+    );
 
     let $toppingList = $('<ul></ul>')
       .addClass("list-group list-group-flush");
@@ -115,7 +110,6 @@ class ElementBuilder {
     
     return $pizzaContainer
     .append($heading)
-    .append($iconList)
     .append($toppingList);
   }
 }

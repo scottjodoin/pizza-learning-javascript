@@ -7,9 +7,15 @@ app.otherToppings =["Ranch", "BBQ Sauce", "Extra Cheese"];
 let url = window.location.pathname;
 var route = url.split('/').pop().split('.').shift() || "";
 let router = {
-  'index': PageBuilder.showHideDisplay
+  'index': ()=>{return PageBuilder.simpleDisplay(app.pizzaData)}
 };
 app.populate = router[route];
+
+// App icons
+app.icons = {
+  "eyeOpen" : "fa fa-eye mr-2",
+  "eyeClosed" : "fa fa-eye-slash mr-2"
+}
 
 
 // Get all unique toppings
