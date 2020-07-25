@@ -1,5 +1,5 @@
 $(document).ready(function(){
 
-  $pizzaCards = app.populate();
+  pizzaCards = app.populate();
   
 });

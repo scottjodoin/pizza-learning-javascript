@@ -13,8 +13,8 @@ app.populate = router[route];
 
 // App icons
 app.icons = {
-  "eyeOpen" : "fa fa-eye mr-2",
-  "eyeClosed" : "fa fa-eye-slash mr-2"
+  "eyeOpen" : "fa fa-eye mr-2 show-hide",
+  "eyeClosed" : "fa fa-eye-slash mr-2 show-hide"
 }
 
 

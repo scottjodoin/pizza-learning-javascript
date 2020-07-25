@@ -1,14 +1,17 @@
 class PageBuilder {
   static simpleDisplay($pizzaData){
 
-    let $pizzaCards = [];
+    let pizzaCards = [];
+    let $cards = [];
     $pizzaData.forEach((pizza)=>{
-      $pizzaCards = $pizzaCards.concat(
-        ElementBuilder.card(
-          ElementBuilder.pizza(pizza)));
+      var $card = ElementBuilder.card();
+      var pizzaCard = new PizzaCard(pizza, $card);
+      pizzaCards = pizzaCards.concat(pizzaCard);
+      $cards = $cards.concat(pizzaCard.$card);
     });
-    PageBuilder.populateColumns($pizzaCards);
-    return $pizzaCards;
+
+    PageBuilder.populateColumns($cards);
+    return pizzaCards;
   }
 
   static populateColumns($elems){
@@ -22,12 +25,11 @@ class PageBuilder {
 class ElementBuilder {
   static iconList(pizza){
     let $container = $('<span></span>')
-      .addClass('row-fluid text-secondary mb-4')
-      .select();
+      .addClass('row-fluid text-secondary mb-4');
+    
     [
       {
         "code" : app.icons.eyeOpen,
-        "callback": ClickHandler.toggleCard
       }
     ]
     .forEach((options)=>{
@@ -46,10 +48,10 @@ class ElementBuilder {
       .addClass(options.code)
       .attr('style',"font-size:24px;")
       .attr('aria-hidden','true')
-      .on("click", options.callback);
   }
 
   static columns($elems, columnCount){
+
     // $elems is an array
     let $row = $('<div></div>')
       .addClass('row')
@@ -79,13 +81,14 @@ class ElementBuilder {
   }
 
   static card ($contents){
-    //TODO: Allow arrays to by inputted using typeof
+    // Note: does not allow arrays at the moment.
 
-    return $('<div></div>')
+    return $('<div class="pizza-card"></div>')
     .addClass('card mb-4 shadow-sm pt-2')
     .append($contents);
   }
-  static pizza (pizza){
+
+  static pizzaDisplay (pizza){
 
     let $pizzaContainer = $('<div></div>')
       .addClass('container-fluid');
