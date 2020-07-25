@@ -10,11 +10,21 @@ class PageBuilder {
       $cards = $cards.concat(pizzaCard.$card);
     });
 
-    PageBuilder.populateColumns($cards);
+    let $toggleButton = ElementBuilder.button(
+      "Show / Hide All",
+      (e)=>{
+        let allShowing = pizzaCards.every((pizzaCard)=>{return pizzaCard.isShowing()});
+        let action = (allShowing) ? "hide" : "show";
+        pizzaCards.forEach((pizzaCard)=>{pizzaCard[action]()});
+      });
+    $('#main-container').append($toggleButton);
+
+    PageBuilder.appendColumns($cards);
+
     return pizzaCards;
   }
 
-  static populateColumns($elems){
+  static appendColumns($elems){
     $('#main-container').append(
       ElementBuilder.columns($elems, 3)
       );
@@ -23,15 +33,20 @@ class PageBuilder {
 }
 
 class ElementBuilder {
-  static iconList(pizza){
+
+  static button(text, callback){
+    return $('<button></button>').text(text)
+      .addClass('btn btn-primary mb-3')
+      .on('click', callback);
+  }
+
+  static iconList(){
     let $container = $('<span></span>')
       .addClass('row-fluid text-secondary mb-4');
     
-    [
-      {
+    [{
         "code" : app.icons.eyeOpen,
-      }
-    ]
+      }]
     .forEach((options)=>{
       $container
       .append(
@@ -88,18 +103,27 @@ class ElementBuilder {
     .append($contents);
   }
 
+  static heading($elems){
+    let $heading = $('<h3></h3>');
+    $elems.forEach(($elem)=>{
+      $heading.append(
+        $('<span></span>')
+          .addClass('mr-2')
+          .append($elem)
+          .css('cursor','pointer')
+      );
+    });
+    return $heading;
+  }
+
   static pizzaDisplay (pizza){
 
     let $pizzaContainer = $('<div></div>')
       .addClass('container-fluid');
-    let $heading = $('<h3></h3')
-    .append(
-      ($('<span></span>')
-        .text(pizza.name + ' ')
-    ))
-    .append(
-      ElementBuilder.iconList(pizza)
-    );
+    let $heading = ElementBuilder.heading([
+      pizza.name,
+      ElementBuilder.iconList()
+    ]);
 
     let $toppingList = $('<ul></ul>')
       .addClass("list-group list-group-flush");

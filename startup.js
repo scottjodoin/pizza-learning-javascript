@@ -9,12 +9,12 @@ var route = url.split('/').pop().split('.').shift() || "";
 let router = {
   'index': ()=>{return PageBuilder.simpleDisplay(app.pizzaData)}
 };
-app.populate = router[route];
+app.initialize = router[route];
 
 // App icons
 app.icons = {
-  "eyeOpen" : "fa fa-eye mr-2 show-hide",
-  "eyeClosed" : "fa fa-eye-slash mr-2 show-hide"
+  "eyeOpen" : "fa fa-eye show-hide",
+  "eyeClosed" : "fa fa-eye-slash show-hide"
 }
 
 

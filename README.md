@@ -1,4 +1,4 @@
-ï»¿# pizza-learning-javascript
+ÿþï»¿# pizza-learning-javascript
 
 This is an application to train employees on the ingredients of pizzas.
 
@@ -8,4 +8,4 @@ This is an application to train employees on the ingredients of pizzas.
 
 * make test page
 
-* make [autocomplete](https://www.w3schools.com/howto/howto_js_autocomplete.asp) (Or using jQuery UI)
+* make [autocomplete](https://www.w3schools.com/howto/howto_js_autocomplete.asp(Or using jQuery UI)

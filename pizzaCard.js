@@ -25,18 +25,26 @@ class PizzaCard {
     return this.$list().css("display") !== "none"
   }
 
+  show = () => {
+    this.$list().attr("style","display:block");
+    this.$showHideEye().attr("class",app.icons.eyeOpen)
+  }
+
+  hide = () => {
+    this.$list().attr("style","display:none");
+    this.$showHideEye().attr("class",app.icons.eyeClosed)
+  }
+
   toggle = () => {
     if (this.isShowing()){
-      this.$list().attr("style","display:none");
-      this.$showHideEye().attr("class",app.icons.eyeClosed)
+      this.hide();
       return true;
     } else {
-      this.$list().attr("style","display:block");
-      this.$showHideEye().attr("class",app.icons.eyeOpen)
+      this.show();
       return false;
     }
   }
-  
+
   $header_clicked = (e) => {
     this.toggle();
   }
