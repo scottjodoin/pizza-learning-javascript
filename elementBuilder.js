@@ -1,38 +1,13 @@
-class PageBuilder {
-  static simpleDisplay($pizzaData){
-
-    let pizzaCards = [];
-    let $cards = [];
-    $pizzaData.forEach((pizza)=>{
-      var $card = ElementBuilder.card();
-      var pizzaCard = new PizzaCard(pizza, $card);
-      pizzaCards = pizzaCards.concat(pizzaCard);
-      $cards = $cards.concat(pizzaCard.$card);
-    });
-
-    let $toggleButton = ElementBuilder.button(
-      "Show / Hide All",
-      (e)=>{
-        let allShowing = pizzaCards.every((pizzaCard)=>{return pizzaCard.isShowing()});
-        let action = (allShowing) ? "hide" : "show";
-        pizzaCards.forEach((pizzaCard)=>{pizzaCard[action]()});
-      });
-    $('#main-container').append($toggleButton);
-
-    PageBuilder.appendColumns($cards);
-
-    return pizzaCards;
-  }
-
-  static appendColumns($elems){
-    $('#main-container').append(
-      ElementBuilder.columns($elems, 3)
-      );
-  }
-  
-}
-
 class ElementBuilder {
+
+  static jumbotron($elems){
+    let $jumbotron = $('<div></div>')
+      .addClass('jumbotron shadow-sm');
+    $elems.forEach(($elem)=>{
+      $jumbotron.append($elem);
+    });
+    return $jumbotron;
+  }
 
   static button(text, callback){
     return $('<button></button>').text(text)
@@ -43,7 +18,6 @@ class ElementBuilder {
   static iconList(){
     let $container = $('<span></span>')
       .addClass('row-fluid text-secondary mb-4');
-    
     [{
         "code" : app.icons.eyeOpen,
       }]
@@ -103,8 +77,8 @@ class ElementBuilder {
     .append($contents);
   }
 
-  static heading($elems){
-    let $heading = $('<h3></h3>');
+  static heading($elems, size){
+    let $heading = $(`<h${size}></h${size}>`);
     $elems.forEach(($elem)=>{
       $heading.append(
         $('<span></span>')
@@ -123,7 +97,7 @@ class ElementBuilder {
     let $heading = ElementBuilder.heading([
       pizza.name,
       ElementBuilder.iconList()
-    ]);
+    ], 3);
 
     let $toppingList = $('<ul></ul>')
       .addClass("list-group list-group-flush");

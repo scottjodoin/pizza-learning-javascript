@@ -7,14 +7,17 @@ app.otherToppings =["Ranch", "BBQ Sauce", "Extra Cheese"];
 let url = window.location.pathname;
 var route = url.split('/').pop().split('.').shift() || "";
 let router = {
-  'index': ()=>{return PageBuilder.simpleDisplay(app.pizzaData)}
+  'index': ()=>{return PageBuilder.index(app.pizzaData)},
+  'test': ()=>{return PageBuilder.test(app.pizzaData)}
 };
 app.initialize = router[route];
 
 // App icons
 app.icons = {
   "eyeOpen" : "fa fa-eye show-hide",
-  "eyeClosed" : "fa fa-eye-slash show-hide"
+  "eyeClosed" : "fa fa-eye-slash show-hide",
+  "correct" : "fa fa-check is-correct badge badge-success",
+  "incorrect" : "fa fa-times badge badge-danger"
 }
 
 
@@ -66,4 +69,48 @@ function binarySearch(ar, el, compare_fn) {
       }
   }
   return {"index":m,"found":false};
+}
+
+function millisecondsToHMS(diff) {
+
+  let ms = diff % 1000;
+  diff = (diff - ms) / 1000;
+  let s = diff % 60;
+  diff = (diff - s) / 60;
+  let m = diff % 60;
+  diff = (diff - m) / 60;
+
+  let mss = padNum(ms, 3);
+  let ss = padNum(s,2);
+  let mm = padNum(m,2);
+
+  return mm + ':' + ss + '.' + mss;
+}
+
+function padNum(num, padlen, padchar) {
+  var pad_char = typeof padchar !== 'undefined' ? padchar : '0';
+  var pad = new Array(1 + padlen).join(pad_char);
+  return (pad + num).slice(-pad.length);
+}
+
+function fisherYatesShuffle(array) {
+
+  // https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
+
+  var currentIndex = array.length, temporaryValue, randomIndex;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
 }

@@ -1,5 +1,3 @@
 $(document).ready(function(){
-
-  pizzaCards = app.initialize();
-
+  app.initialize();
 });
