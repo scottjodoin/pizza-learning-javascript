@@ -106,7 +106,7 @@ class PizzaTest {
         ElementBuilder.button(
         "Next",
         this.nextQuestion
-        )
+        ).attr('id', this.currentQuestion().answers.length)
       )
     );
     this.$questionCard.find('input').first().focus();
@@ -167,8 +167,8 @@ class ListQuestion{
     let $inputGroup = $('<div class="autocomplete input-group mb-3"></div>').addClass("input-group mb-3");
     this.$card.append($inputGroup);
 
-    this.answers.forEach((answer)=>{
-      let $input = $('<input type="text" class="form-control mb-1">');
+    this.answers.forEach((answer, index)=>{
+      let $input = $('<input type="text" class="form-control mb-1">').attr('id',index);
       $inputGroup.append($('<div class="container-fluid"></div>').append($input));
       autocomplete($input,this.choices);
     });
