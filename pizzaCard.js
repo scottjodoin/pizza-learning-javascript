@@ -8,18 +8,23 @@ class PizzaCard {
     );
     this.$header().on('click',this.$header_clicked);
   }
+
   $header = () => {
     return this.$card.find('h3').first();
   }
+
   $showHideEye = () => {
     return this.$card.find('i.show-hide').first();
   }
+
   $list = () => {
     return this.$card.find('ul').first();
   }
+
   isShowing = () => {
     return this.$list().css("display") !== "none"
   }
+
   toggle = () => {
     if (this.isShowing()){
       this.$list().attr("style","display:none");
@@ -31,6 +36,7 @@ class PizzaCard {
       return false;
     }
   }
+  
   $header_clicked = (e) => {
     this.toggle();
   }
