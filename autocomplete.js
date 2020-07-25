@@ -64,7 +64,7 @@ function autocomplete($inp, arr) {
           /*and simulate a click on the "active" item:*/
           if (x) x[currentFocus].click();
         }
-        document.getElementById(parseInt(inp.id) + 1).focus();
+        document.getElementById(parseInt(inp.id) + 1).select();
       }else if (e.keyCode == 9){
         if (x) x[currentFocus].click();
       }
