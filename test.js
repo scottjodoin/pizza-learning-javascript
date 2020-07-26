@@ -6,6 +6,7 @@ class PizzaTest {
     this.endTime = 0;
     this.timer = undefined;
     this.$questionCard = undefined;
+    this.options = data.options || {};
     this.listQuestions = 
       data.pizzaData.map((pizza)=>{
         return new ListQuestion({
@@ -22,7 +23,7 @@ class PizzaTest {
   startScreen = ()=>{
     this.$container.empty();
     this.$container.append(ElementBuilder.jumbotron([
-      ElementBuilder.heading(['Pizza Test'], 1),
+      ElementBuilder.heading([ this.options.title || 'Test'], 1),
       ElementBuilder.heading([`${this.listQuestions.length} questions.`], 3),
       ElementBuilder.button("Start Test", this.$startButton_pressed)
         .attr('id', 'next-button')

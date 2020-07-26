@@ -40,7 +40,10 @@ class PageBuilder {
       'pizzaData': pizzaData,
       'choices' : app.allToppings,
       '$container': $container,
-      'options': {"firstLetter": true}
+      'options': {
+        "firstLetter": true,
+        "title": "Practice Test"
+      }
     });
   }
 
