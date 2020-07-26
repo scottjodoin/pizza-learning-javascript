@@ -188,7 +188,7 @@ class PizzaTestView{
     (new ListQuestionView(this.$questionCard)).render(
       data.listQuestion,
       data.options);
-
+      this.$questionCard.find('h3').first().prepend(`${data.questionIndex}. `);
       this.$questionCard.append( $('<div class="container"></div>')
       .append(
         ElementBuilder.button(
