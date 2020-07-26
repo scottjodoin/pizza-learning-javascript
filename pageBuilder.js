@@ -40,7 +40,7 @@ class PageBuilder {
   static practice(pizzaData){
     let $container = $('#main-container');
     let pizzaTest = new PizzaTest({
-      'pizzaData': [pizzaData[0]],
+      'pizzaData': pizzaData,
       'choices' : app.allToppings,
       'options': {
         "firstLetter": true,
