@@ -101,7 +101,14 @@ class PizzaTest {
   buildQuestion = ()=>{
     this.$questionCard.empty();
     this.currentQuestion().$card = this.$questionCard;
-    this.currentQuestion().build()
+    let heading = `${
+      this.questionIndex + 1
+    }. ${
+      this.currentQuestion().question
+    }`;
+    this.currentQuestion().build({
+      "title": heading
+    })
     this.$questionCard.append( $('<div class="container"></div>')
       .append(
         ElementBuilder.button(
@@ -164,8 +171,10 @@ class ListQuestion{
     return incorrects;
   }
 
-  build = ()=>{
-    this.$card.append(ElementBuilder.heading([this.question],3).addClass("ml-3 mb-3"));
+  build = (options)=>{
+    options = options || {};
+    let title = options.title || this.question;
+    this.$card.append(ElementBuilder.heading([title],3).addClass("ml-3 mb-3"));
     let $inputGroup = $('<form autocomplete="off"></form>')
       .append('<div class="autocomplete input-group mb-3"></div>')
       .addClass("input-group mb-3");
