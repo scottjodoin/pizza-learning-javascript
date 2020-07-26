@@ -27,24 +27,30 @@ class PageBuilder {
 
   static test(pizzaData){
     let $container = $('#main-container');
-    new PizzaTest({
+    let pizzaTest = new PizzaTest({
       'pizzaData': pizzaData,
       'choices' : app.allToppings,
-      '$container': $container
     });
+    new PizzaTestController(
+      pizzaTest,
+      $container
+    );
   }
 
   static practice(pizzaData){
     let $container = $('#main-container');
-    new PizzaTest({
-      'pizzaData': pizzaData,
+    let pizzaTest = new PizzaTest({
+      'pizzaData': [pizzaData[0]],
       'choices' : app.allToppings,
-      '$container': $container,
       'options': {
         "firstLetter": true,
         "title": "Practice Test"
       }
     });
+    new PizzaTestController(
+      pizzaTest,
+      $container
+    );
   }
 
   static addElements($elems){
