@@ -117,3 +117,7 @@ function fisherYatesShuffle(array) {
 
   return array;
 }
+
+function toPercentageString(num){
+  return parseFloat(num * 100).toFixed(2)+"%";
+}

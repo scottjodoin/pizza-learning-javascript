@@ -41,5 +41,5 @@
 }
 
 .incorrect:focus {
-  background-color: transparent;
+  background-color: lightpink;
 }

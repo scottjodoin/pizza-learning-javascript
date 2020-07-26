@@ -4,6 +4,8 @@ class PizzaTest {
     this.$container = data.$container;
     this.startTime = 0;
     this.endTime = 0;
+    this.score = 0;
+    this.currentScore = 0;
     this.timer = undefined;
     this.$questionCard = undefined;
     this.options = data.options || {};
@@ -33,9 +35,14 @@ class PizzaTest {
 
   endScreen = ()=>{
     this.$container.empty();
+    let percentage = this.score / this.listQuestions.length;
+    let percentageString = toPercentageString(percentage);
+    let endClass = (percentage >= 0.9) ? 'text-success' : 'text-warning';
     this.$container.append(ElementBuilder.jumbotron([
-      ElementBuilder.heading(['100% correct!'],1).addClass('text-success'),
-      ElementBuilder.heading([`Final Time: ${this.timeString()}`],3),
+      ElementBuilder.heading([`${percentageString
+        }</br>${this.score} / ${this.listQuestions.length} correct!`],1)
+        .addClass(endClass),
+      ElementBuilder.heading([`Final Time: ${this.getTimeString()}`],3),
       ElementBuilder.button('Retry',()=>(window.location.reload()))
         .attr('id', 'next-button')
     ]));
@@ -62,18 +69,23 @@ class PizzaTest {
     this.nextQuestion();
   }
 
-  currentQuestion = ()=>{
+  getCurrentQuestion = ()=>{
     return this.listQuestions[this.questionIndex];
   }
 
   nextQuestion = ()=>{
+    let minSuccess = 0.125;
     if (this.questionIndex >= 0 && !this.checkAnswer()) {
+      this.currentScore = (this.currentScore > minSuccess) ? 
+        this.currentScore / 2 : 0;
       this.rejectAnswer();
       return;
     }
 
     this.$questionCard.empty();
     this.questionIndex += 1;
+    this.score += this.currentScore;
+    this.currentScore = 1;
 
     if (this.questionIndex == this.listQuestions.length){
       this.endTime = Date.now();
@@ -85,9 +97,8 @@ class PizzaTest {
   }
 
   rejectAnswer = ()=>{
-    //TODO: indicate that something is wrong!! red flash??
-    let answers = this.currentAnswers();
-    let incorrects = this.currentQuestion().getIncorrectIndices(answers);
+    let answers = this.getCurrentAnswers();
+    let incorrects = this.getCurrentQuestion().getIncorrectIndices(answers);
     let $inputs = this.$questionCard.find('input');
     $inputs.each((index, $elem)=>{
       if (!$($elem).hasClass(app.classes.incorrect) && incorrects.includes(index)) $($elem).addClass(app.classes.incorrect);
@@ -97,7 +108,7 @@ class PizzaTest {
     return;
   }
 
-  currentAnswers = ()=>{
+  getCurrentAnswers = ()=>{
     let answers = [];
     this.$questionCard.find('input').each(
        (index, $elem)=>{answers = answers.concat($($elem).val());});
@@ -105,18 +116,18 @@ class PizzaTest {
   }
 
   checkAnswer = ()=>{
-    return this.currentQuestion().isAllCorrect(this.currentAnswers());
+    return this.getCurrentQuestion().isAllCorrect(this.getCurrentAnswers());
   }
 
   buildQuestion = ()=>{
     this.$questionCard.empty();
-    this.currentQuestion().$card = this.$questionCard;
+    this.getCurrentQuestion().$card = this.$questionCard;
     let heading = `${
       this.questionIndex + 1
     }. ${
-      this.currentQuestion().question
+      this.getCurrentQuestion().question
     }`;
-    this.currentQuestion().build({
+    this.getCurrentQuestion().build({
       "title": heading
     })
     this.$questionCard.append( $('<div class="container"></div>')
@@ -124,13 +135,13 @@ class PizzaTest {
         ElementBuilder.button(
         "Next",
         this.nextQuestion
-        ).attr('id', this.currentQuestion().answers.length)
+        ).attr('id', this.getCurrentQuestion().answers.length)
       )
     );
     this.$questionCard.find('input').first().focus();
   }
 
-  timeString = () => {
+  getTimeString = () => {
     let endTime = Date.now();
     if (this.endTime !== 0){
       endTime = this.endTime;
@@ -140,7 +151,7 @@ class PizzaTest {
   }
 
   tick = () => {
-    $('#timer').text(this.timeString);
+    $('#timer').text(this.getTimeString);
     if (this.endTime != 0) clearInterval(this.timer);
   }
 
