@@ -32,7 +32,7 @@
 
 /* */
 .incorrect {
-  background-color: red;
+  background-color: rgb(220, 53, 69);;
   color: white;
   transition: background-color 0.2s linear; 
   -moz-transition: background-color 0.2s linear;  

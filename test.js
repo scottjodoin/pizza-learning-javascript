@@ -92,7 +92,7 @@ class PizzaTest {
     $inputs.each((index, $elem)=>{
       if (!$($elem).hasClass(app.classes.incorrect) && incorrects.includes(index)) $($elem).addClass(app.classes.incorrect);
     });
-    //this.$questionCard.fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
+    this.$questionCard.fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
     this.$questionCard.find('input')[incorrects[0]].select();
     return;
   }
