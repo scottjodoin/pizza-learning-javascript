@@ -6,13 +6,13 @@ class PizzaTest {
     this.endTime = 0;
     this.timer = undefined;
     this.$questionCard = undefined;
-
     this.listQuestions = 
       data.pizzaData.map((pizza)=>{
         return new ListQuestion({
           'question': pizza.name,
           'answer': pizza.toppings,
-          'choices': data.choices
+          'choices': data.choices,
+          'options': data.options
         });
       });
     this.listQuestions = fisherYatesShuffle(this.listQuestions);
@@ -138,6 +138,7 @@ class ListQuestion{
     this.answers = data.answer;
     this.choices = data.choices;
     this.$card = data.$card;
+    this.options = data.options || {};
   }
 
   isAllCorrect = (list)=>{
@@ -169,6 +170,8 @@ class ListQuestion{
 
     this.answers.forEach((answer, index)=>{
       let $input = $('<input type="text" class="form-control mb-1">').attr('id',index);
+      
+      if (this.options["firstLetter"] === true) $input.attr('placeholder', answer.charAt(0));
       $inputGroup.append($('<div class="container-fluid"></div>').append($input));
       autocomplete($input,this.choices);
     });

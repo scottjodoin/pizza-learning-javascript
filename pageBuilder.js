@@ -34,6 +34,16 @@ class PageBuilder {
     });
   }
 
+  static practice(pizzaData){
+    let $container = $('#main-container');
+    new PizzaTest({
+      'pizzaData': pizzaData,
+      'choices' : app.allToppings,
+      '$container': $container,
+      'options': {"firstLetter": true}
+    });
+  }
+
   static addElements($elems){
     $('#main-container').append($elems);
   }

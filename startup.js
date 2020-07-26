@@ -8,7 +8,8 @@ let url = window.location.pathname;
 var route = url.split('/').pop().split('.').shift() || "";
 let router = {
   'index': ()=>{return PageBuilder.index(app.pizzaData)},
-  'test': ()=>{return PageBuilder.test(app.pizzaData)}
+  'test': ()=>{return PageBuilder.test(app.pizzaData)},
+  'practice': ()=>{return PageBuilder.practice(app.pizzaData)}
 };
 app.initialize = router[route];
 
