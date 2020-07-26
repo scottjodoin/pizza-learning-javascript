@@ -6,6 +6,11 @@ function autocomplete($inp, arr) {
   var currentFocus;
   /*execute a function when someone writes in the text field:*/
   inp.addEventListener("input", function(e) {
+      /* MOD: incorrect */
+      if (this.classList.contains(app.classes.incorrect)) {
+        this.classList.remove(app.classes.incorrect);
+      }
+
       var a, b, i, val = this.value;
       /*close any already open lists of autocompleted values*/
       closeAllLists();
@@ -22,6 +27,7 @@ function autocomplete($inp, arr) {
         /*check if the item starts with the same letters as the text field value:*/
         if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
 
+          /* MOD */
           currentFocus = 0;
 
           /*create a DIV element for each matching element:*/
@@ -66,9 +72,11 @@ function autocomplete($inp, arr) {
         }
         document.getElementById(parseInt(inp.id) + 1).select();
       }else if (e.keyCode == 9){
+        /* MOD */
         if (x) x[currentFocus].click();
       }
 
+      /* MOD */
       if (currentFocus > -1){
         addActive(x);
       }

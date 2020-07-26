@@ -28,3 +28,18 @@
   background-color: DodgerBlue !important;
   color: #ffffff;
 }
+
+
+/* */
+.incorrect {
+  background-color: red;
+  color: white;
+  transition: background-color 0.2s linear; 
+  -moz-transition: background-color 0.2s linear;  
+  -webkit-transition: background-color 0.2s linear; 
+  -ms-transition: background-color 0.2s linear; 
+}
+
+.incorrect:focus {
+  background-color: transparent;
+}

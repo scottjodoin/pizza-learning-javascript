@@ -20,7 +20,9 @@ app.icons = {
   "correct" : "fa fa-check is-correct badge badge-success",
   "incorrect" : "fa fa-times badge badge-danger"
 }
-
+app.classes = {
+  "incorrect" : "incorrect"
+}
 
 // Get all unique toppings
 app.allToppings = [];

@@ -86,16 +86,26 @@ class PizzaTest {
 
   rejectAnswer = ()=>{
     //TODO: indicate that something is wrong!! red flash??
-    this.$questionCard.fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
-    this.$questionCard.find('input').first().select();
+    let answers = this.currentAnswers();
+    let incorrects = this.currentQuestion().getIncorrectIndices(answers);
+    let $inputs = this.$questionCard.find('input');
+    $inputs.each((index, $elem)=>{
+      if (!$($elem).hasClass(app.classes.incorrect) && incorrects.includes(index)) $($elem).addClass(app.classes.incorrect);
+    });
+    //this.$questionCard.fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
+    this.$questionCard.find('input')[incorrects[0]].select();
     return;
   }
 
-  checkAnswer = ()=>{
+  currentAnswers = ()=>{
     let answers = [];
     this.$questionCard.find('input').each(
-       (index, elem)=>{answers = answers.concat($(elem).val());});
-    return this.currentQuestion().isAllCorrect(answers);
+       (index, $elem)=>{answers = answers.concat($($elem).val());});
+    return answers;
+  }
+
+  checkAnswer = ()=>{
+    return this.currentQuestion().isAllCorrect(this.currentAnswers());
   }
 
   buildQuestion = ()=>{
