@@ -166,7 +166,9 @@ class ListQuestion{
 
   build = ()=>{
     this.$card.append(ElementBuilder.heading([this.question],3).addClass("ml-3 mb-3"));
-    let $inputGroup = $('<div class="autocomplete input-group mb-3"></div>').addClass("input-group mb-3");
+    let $inputGroup = $('<form autocomplete="off"></form>')
+      .append('<div class="autocomplete input-group mb-3"></div>')
+      .addClass("input-group mb-3");
     this.$card.append($inputGroup);
 
     this.answers.forEach((answer, index)=>{
