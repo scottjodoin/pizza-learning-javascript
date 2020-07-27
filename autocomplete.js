@@ -41,9 +41,13 @@ function autocomplete($inp, arr) {
           b.addEventListener("click", function(e) {
               /*insert the value for the autocomplete text field:*/
               inp.value = this.getElementsByTagName("input")[0].value;
+              
               /*close the list of autocompleted values,
               (or any other open lists of autocompleted values:*/
               closeAllLists();
+              
+              /* Move to the next id */
+              document.getElementById(`${parseInt(inp.id) + 1}`).select();
           });
           a.appendChild(b);
         }
@@ -63,24 +67,13 @@ function autocomplete($inp, arr) {
         decrease the currentFocus variable:*/
         currentFocus--;
         addActive(x);
-      } else if (e.keyCode == 13) {
+      } else if (e.keyCode == 13 || e.keyCode == 9) {
         /*If the ENTER key is pressed, prevent the form from being submitted,*/
         e.preventDefault();
         if (currentFocus > -1) {
           /*and simulate a click on the "active" item:*/
           if (x) x[currentFocus].click();
-          closeAllLists();
         }
-        document.getElementById(parseInt(inp.id) + 1).select();
-      }else if (e.keyCode == 9){
-        /* MOD */
-        if (x) x[currentFocus].click();
-        closeAllLists();
-      }
-
-      /* MOD */
-      if (currentFocus > -1){
-        addActive(x);
       }
   });
   function addActive(x) {
