@@ -2,7 +2,7 @@ function autocomplete($inp, arr) {
   let inp =$inp[0];
   /*the autocomplete function takes two arguments,
   the text field element and an array of possible autocompleted values:*/
-  var currentFocus;
+  var currentFocus = 0;
   /*execute a function when someone writes in the text field:*/
   inp.addEventListener("input", function(e) {
       /* MOD: incorrect */
@@ -14,7 +14,9 @@ function autocomplete($inp, arr) {
       /*close any already open lists of autocompleted values*/
       closeAllLists();
       if (!val) { return false;}
+
       currentFocus = 0;
+
       /*create a DIV element that will contain the items (values):*/
       a = document.createElement("DIV");
       a.setAttribute("id", this.id + "autocomplete-list");
@@ -39,8 +41,6 @@ function autocomplete($inp, arr) {
 
               /*insert the value for the autocomplete text field:*/
               inp.value = this.getElementsByTagName("input")[0].value;
-              
-              
 
               /*close the list of autocompleted values,
               (or any other open lists of autocompleted values:*/
@@ -77,8 +77,9 @@ function autocomplete($inp, arr) {
         if (currentFocus > -1) {
           /*and simulate a click on the "active" item:*/
           if (x) x[currentFocus].click();
+          closeAllLists();
         }
-      }else if (e.keyCode == 9) {
+      }else if (e.keyCode == 9) { // tab
         if (currentFocus > -1) {
           /*and simulate a click on the "active" item:*/
           if (x) x[currentFocus].click(
