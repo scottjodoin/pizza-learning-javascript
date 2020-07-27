@@ -26,9 +26,6 @@ function autocomplete($inp, arr) {
         /*check if the item starts with the same letters as the text field value:*/
         if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
 
-          /* MOD */
-          currentFocus = 0;
-
           /*create a DIV element for each matching element:*/
           b = document.createElement("DIV");
           /*make the matching letters bold:*/
