@@ -1,4 +1,3 @@
-// Modified: lines 2, 3, 12 and 66 
 function autocomplete($inp, arr) {
   let inp =$inp[0];
   /*the autocomplete function takes two arguments,
@@ -15,7 +14,7 @@ function autocomplete($inp, arr) {
       /*close any already open lists of autocompleted values*/
       closeAllLists();
       if (!val) { return false;}
-      currentFocus = -1;
+      currentFocus = 0;
       /*create a DIV element that will contain the items (values):*/
       a = document.createElement("DIV");
       a.setAttribute("id", this.id + "autocomplete-list");
@@ -46,7 +45,7 @@ function autocomplete($inp, arr) {
               (or any other open lists of autocompleted values:*/
               closeAllLists();
               
-              /* Move to the next id */
+              /* MOD: Move to the next id */
               document.getElementById(`${parseInt(inp.id) + 1}`).select();
           });
           a.appendChild(b);

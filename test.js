@@ -35,7 +35,7 @@ class PizzaTest{
   constructor (data){
     this.score = data.score || 0;
     this.options = data.options || {};
-    this.listQuestions = 
+    this.listQuestions =
       data.pizzaData.map((pizza)=>{
         return new ListQuestion({
           'question': pizza.name,
@@ -69,7 +69,7 @@ class PizzaTestController{
 
     this.view.buildQuestionCardContainer();
     this.stopwatch.start(this.view.updateStopwatch);
-    
+
     this.nextQuestion();
   }
 
@@ -83,7 +83,7 @@ class PizzaTestController{
   }
 
   rejectAnswer = ()=>{
-    
+
     let answers = this.view.getCurrentAnswers();
     let incorrects = this.getCurrentQuestion().getIncorrectIndices(answers);
     this.view.showIncorrectAnswers(incorrects);
@@ -95,7 +95,7 @@ class PizzaTestController{
         this.questionIndex >= 0 &&
         !this.checkAnswer(this.getCurrentQuestion())
       ) {
-      this.currentScore = (this.currentScore > minSuccess) ? 
+      this.currentScore = (this.currentScore > minSuccess) ?
         this.currentScore / 2 : 0;
       this.rejectAnswer();
       return;
@@ -196,10 +196,10 @@ class PizzaTestView{
         callback
         ).attr('id', data.listQuestion.answers.length)
       ));
-      
+
     this.$questionCard.find('input').first().focus();
   }
-  
+
 
   getCurrentAnswers = ()=>{
     let answers = [];
@@ -255,7 +255,7 @@ class ListQuestionView{
   }
 
   render = (data, options)=>{
-    //(title),options.firstLetter question, answers
+
     let title = data.question;
     this.$container.append(ElementBuilder.heading([title],3).addClass("ml-3 mb-3"));
     let $inputGroup = $('<form autocomplete="off"></form>')
@@ -264,8 +264,10 @@ class ListQuestionView{
     this.$container.append($inputGroup);
 
     data.answers.forEach((answer, index)=>{
-      let $input = $('<input type="text" class="form-control mb-1">').attr('id',index);
-      
+      let $input = $('<input type="text" class="form-control mb-1">')
+        .attr('id',index)
+        .focus(function() { $(this).select(); } );
+
       if (options.firstLetter === true) $input.attr('placeholder', answer.charAt(0));
       $inputGroup.append($('<div class="container-fluid"></div>').append($input));
       autocomplete($input,data.choices);
