@@ -1,11 +1,13 @@
 class PageBuilder {
 
-  static index($pizzaData){
+  static index(pizzaData){
+    let $container = $('#main-container');
+
     let pizzaCards = [];
     let $cards = [];
-    $pizzaData.forEach((pizza)=>{
+    pizzaData.forEach((pizza)=>{
       var $card = ElementBuilder.card();
-      var pizzaCard = new PizzaCard(pizza, $card);
+      var pizzaCard = new PizzaView(pizza, $card);
       pizzaCards = pizzaCards.concat(pizzaCard);
       $cards = $cards.concat(pizzaCard.$card);
     });

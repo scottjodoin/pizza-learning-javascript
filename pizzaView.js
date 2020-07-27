@@ -1,4 +1,4 @@
-class PizzaCard {
+class PizzaView {
 
   constructor(pizza, $card){
     this.pizza = pizza;
