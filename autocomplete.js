@@ -38,7 +38,7 @@ function autocomplete($inp, arr) {
           /*execute a function when someone clicks on the item value (DIV element):*/
           b.addEventListener("click", function(e, options) {
               options = options || {};
-
+              alert("hey");
               /*insert the value for the autocomplete text field:*/
               inp.value = this.getElementsByTagName("input")[0].value;
 
