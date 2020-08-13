@@ -117,6 +117,7 @@ class PizzaTestController{
 
     this.view.renderQuestion({
       "questionIndex": this.questionIndex + 1,
+      "questionCount": this.listQuestions.length + 1,
       "options": this.options,
       "listQuestion": this.getCurrentQuestion()
     }, this.nextQuestion);
@@ -208,7 +209,7 @@ class PizzaTestView{
     (new ListQuestionView(this.$questionCard)).render(
       data.listQuestion,
       data.options);
-      this.$questionCard.find('h3').first().prepend(`${data.questionIndex}. `);
+      this.$questionCard.find('h3').first().prepend(`${data.questionIndex}/${data.questionCount}. `);
       this.$questionCard.append( $('<div class="container"></div>')
       .append(
         ElementBuilder.button(
