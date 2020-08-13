@@ -36,22 +36,15 @@ function autocomplete($inp, arr) {
           /*insert a input field that will hold the current array item's value:*/
           b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
           /*execute a function when someone clicks on the item value (DIV element):*/
-          b.addEventListener("click", function(e, options) {
-              options = options || {};
+          b.addEventListener("click", function(e) {
               /*insert the value for the autocomplete text field:*/
               inp.value = this.getElementsByTagName("input")[0].value;
 
               /*close the list of autocompleted values,
               (or any other open lists of autocompleted values:*/
               closeAllLists();
-              
-              /* MOD: Move to the next id */
-              if (options.tabPressed !== true)
-              {
-                e.preventDefault();
-                document.getElementById(`${parseInt(inp.id) + 1}`).focus();
-              }
-              
+              document.getElementById(`${parseInt(inp.id) + 1}`).focus();
+
           });
           a.appendChild(b);
         }
@@ -75,16 +68,14 @@ function autocomplete($inp, arr) {
         /*If the ENTER key is pressed, prevent the form from being submitted,*/
         if (currentFocus > -1) {
           /*and simulate a click on the "active" item:*/
+          e.preventDefault();
           if (x) x[currentFocus].click();
-          closeAllLists();
         }
       }else if (e.keyCode == 9) { // tab
         if (currentFocus > -1) {
           /*and simulate a click on the "active" item:*/
-          if (x) x[currentFocus].click(
-            undefined,
-            {"tabPressed": true}
-          );
+          if (x) x[currentFocus].click();
+          e.preventDefault();
         }
       }
   });

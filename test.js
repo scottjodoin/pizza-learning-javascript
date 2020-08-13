@@ -33,7 +33,6 @@ class Stopwatch{
 
 class PizzaTest{
   constructor (data){
-    this.score = data.score || 0;
     this.options = data.options || {};
     this.listQuestions =
       data.pizzaData.map((pizza)=>{
@@ -50,14 +49,20 @@ class PizzaTest{
 
 class PizzaTestController{
   constructor(pizzaTest, $container){
-    this.score = pizzaTest.score;
+
     this.listQuestions = pizzaTest.listQuestions;
     this.options = pizzaTest.options;
-
     this.view = new PizzaTestView($container);
     this.stopwatch = new Stopwatch();
+    this.initializeTest();
+
+  }
+
+  initializeTest = ()=>{
     this.questionIndex = -1;
+    this.score = 0;
     this.currentScore = 0;
+    this.incorrectQuestions = [];
     this.view.renderStartScreen({
       "title" : this.options.title || "Test",
       "questionCount": this.listQuestions.length,
@@ -66,10 +71,8 @@ class PizzaTestController{
   }
 
   startTest = ()=>{
-
     this.view.buildQuestionCardContainer();
     this.stopwatch.start(this.view.updateStopwatch);
-
     this.nextQuestion();
   }
 
@@ -86,6 +89,9 @@ class PizzaTestController{
 
     let answers = this.view.getCurrentAnswers();
     let incorrects = this.getCurrentQuestion().getIncorrectIndices(answers);
+    if (!this.incorrectQuestions.includes(this.getCurrentQuestion())){
+      this.incorrectQuestions.push(this.getCurrentQuestion());
+    }
     this.view.showIncorrectAnswers(incorrects);
   }
 
@@ -105,13 +111,7 @@ class PizzaTestController{
     this.currentScore = 1;
 
     if (this.questionIndex == this.listQuestions.length){
-      this.stopwatch.stop();
-      this.view.renderEndScreen({
-        "score": this.score,
-        "questionCount": this.listQuestions.length,
-        "percentage": this.score / this.listQuestions.length,
-        "time":this.stopwatch.getTime()
-      });
+      this.endTest();
       return;
     }
 
@@ -121,7 +121,24 @@ class PizzaTestController{
       "listQuestion": this.getCurrentQuestion()
     }, this.nextQuestion);
   }
+
+  endTest = () =>{
+    this.stopwatch.stop();
+
+    this.view.renderEndScreen({
+      "score": this.score,
+      "questionCount": this.listQuestions.length,
+      "percentage": this.score / this.listQuestions.length,
+      "time":this.stopwatch.getTime(),
+      "showFocusButton": !!this.incorrectQuestions.length,
+      "focusCallback": ()=>{
+        this.listQuestions = this.incorrectQuestions;
+        this.initializeTest()}
+    });
+  }
 }
+
+
 
 class PizzaTestView{
   constructor($container)
@@ -170,12 +187,15 @@ class PizzaTestView{
     this.$container.empty();
     let percentageString = toPercentageString(data.percentage);
     let endClass = (data.percentage >= 0.9) ? 'text-success' : 'text-warning';
+    let $focusButton = ElementBuilder.button('Focus questions', data.focusCallback)
+    .attr('id', 'next-button');
     this.$container.append(ElementBuilder.jumbotron([
       ElementBuilder.heading([`${percentageString
         }</br>${data.score} / ${data.questionCount} correct!`],1)
         .addClass(endClass),
       ElementBuilder.heading([`Final Time: ${millisecondsToHMS(data.time)}`],3),
-      ElementBuilder.button('Retry',()=>(window.location.reload()))
+      (data.showFocusButton) ? $focusButton : "",
+      ElementBuilder.button('Full restart',()=>(window.location.reload()))
         .attr('id', 'next-button')
     ]));
     $('#next-button').focus();

@@ -10,9 +10,9 @@ class ElementBuilder {
   }
 
   static button(text, callback){
-    return $('<button></button>').text(text)
-      .addClass('btn btn-primary mb-3')
-      .on('click', callback);
+      return $('<button></button>').text(text)
+        .addClass('btn btn-primary mb-3 mr-3')
+        .on('click', callback);
   }
 
   static iconList(){
